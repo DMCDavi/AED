@@ -26,21 +26,19 @@ int main(){
 		scanf("%c", &sim_nao);
 		if(sim_nao == 'S'){
 			
+			fflush(stdin);
 			printf("Digite a placa:\n");
-			scanf("%s", &carro.placa);
+			scanf("%s", carro.placa);
 			printf("Digite o modelo:\n");
-			scanf("%s", &carro.modelo);
+			scanf("%s", carro.modelo);
 			printf("Digite o ano:\n");
-			scanf("%d", &carro.ano);
+			scanf("%d", &(carro.ano));
 			printf("Digite a cor:\n");
-			scanf("%s", &carro.cor);
+			scanf("%s", carro.cor);
 			printf("Digite a marca:\n");
-			scanf("%s", &carro.marca);
-			printf("%s\n", carro.placa);
-			printf("%s\n", carro.modelo);
-			printf("%d\n", carro.ano);
-			printf("%s\n", carro.cor);
-			printf("%s\n", carro.marca);
+			scanf("%s", carro.marca);
+			fflush(stdin);
+			
 			
 			
 		}else if(sim_nao == 'N')break;
