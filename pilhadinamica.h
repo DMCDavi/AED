@@ -1,108 +1,97 @@
-#include <stdio.h>
+#include<stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
+#include <string.h>
 
-typedef struct elem
-{
-    int data;
-    struct elem *prox;
-} elem;
+typedef struct{
+	char letra[8];
+}BLOCO;
 
+typedef struct no{
+	BLOCO dados;
+	struct no *prox;
+} NO;
 
-typedef struct pilha
-{
-    struct elem *topo;
-} pilha;
+typedef struct{
+	NO *topo;
+}PILHA;
 
+PILHA* cria_pilha(){ // ela irá alocar um espaço na memória;
+	PILHA *pi = (PILHA*) malloc(sizeof(PILHA));
+	if(pi != NULL) // Deu certo a alocação
+		pi->topo = NULL;  // Faz o ponteiro apontar para NULL, ou seja, a pilha está vazia
+	return pi;
+}	
 
-pilha *PILHA_construtor()
-{
-    pilha *p = (pilha*)malloc(sizeof(pilha));
-    if(p==NULL)
-        exit(1);
-    else
-        p->topo = NULL;
-    return p;
+int pilha_vazia(PILHA *p){
+	if(p==NULL || p->topo==NULL) return 1;
+	return 0;
 }
 
-bool PILHA_vazia(pilha *p)
-{
-    if (p->topo == NULL)
-        return true;
-    else
-        return false;
-}
-
-int PILHA_tamanho(pilha *p)
-{
-    elem *aux = p->topo;
-    int tam = 0;
-    while(aux!= NULL)
-    {
-        tam++;
-        aux = aux->prox;
-    }
-    return tam;
-}
-
-void PILHA_exibir(pilha *p)
-{
-    elem *aux = p->topo;
-    printf("Pilha: \"");
-    while(aux!= NULL)
-    {
-        printf("%d ",aux->data);
-        aux = aux->prox;
-    }
-    printf("\"\n");
+// Função que insere no topo da pilha
+int empilha(PILHA *p, BLOCO c){ 
+	if(p == NULL) return 0;
+	NO *novo_no = (NO*)malloc(sizeof(NO));
+	if(novo_no==NULL) return 0; // Não alocou memória
+	// atribuir os valores para o novo nó;
+	novo_no->dados= c;
+	// Faz o novo nó apontar para o nó do topo da pilha
+	novo_no->prox=p->topo;
+	// Desloca o topo fazendo-o apontar para o novo nó
+	p->topo = novo_no;
+	return 1;
 }
 
 
-bool PILHA_push(pilha *p, elem *dado)
-{
-    elem *novo = (elem*)malloc(sizeof(elem));
-    novo->data = dado;
-    novo->prox = p->topo;
-    p->topo = novo;
-    return true;
+int desempilha(PILHA *p, BLOCO *c){ 	
+	if(pilha_vazia(p)) return 0;
+	NO *aux = p->topo;
+	
+	strcpy(c->letra, aux->dados.letra);
+	
+	// Desloca o topo fazendo-o apontar para o próximo nó
+	p->topo = aux->prox;
+	
+	// Libera o nó desempilhado
+	free(aux);
+
+	return 1;
 }
 
-bool PILHA_pop(pilha *p, elem *dado)
-{
-    elem *aux;
 
-    if (PILHA_vazia(p))
-        return false;
-    else
-    {
-        aux = p->topo;
-        p->topo = aux->prox;
-        dado = aux->prox->data;
-        free(aux);
-    }
+void imprime_pilha(PILHA *p){
+	printf("\n==============TOPO==============\n");	
+	if(pilha_vazia(p)){
+		printf("Pilha Vazia!\n");	
+		return;
+	} 
+	NO *aux = p->topo;
+	while (aux!=NULL){
+		printf("Letras: %s\n", aux->dados.letra);
+		aux=aux->prox;
+	}
+	printf("==============BASE==============\n");	
 }
 
-int main()
-{
-    pilha *p = PILHA_construtor();
-    int op;
-    int num;
-    do{
-    printf("1 - POP, 2 - PUSH , 3 - SAIR: ");
-    scanf("%d",&op);
-    if (op == 1){
-        printf("Digite um numero: ");
-        scanf("%d",&num);
-        PILHA_push(p,num);
-        PILHA_exibir(p);
-    }
-    else if(op == 2){
-        PILHA_pop(p,num);
-        PILHA_exibir(p);
-    }
-    else{
-        free(p);
-    }
-    }while(op!= 0 && op!= 3);
-    return 0;
+int tamanho_pilha(PILHA *p){
+    int cont=0;
+    if(!pilha_vazia(p)) {
+	    NO *atu = p->topo;
+	    while(atu!=NULL){
+	        cont++;
+	        atu=atu->prox;
+	    }
+	}
+    return cont;
+}
+
+void destroi_pilha(PILHA *p){
+	if(!pilha_vazia(p)){
+		NO *atu = p->topo;
+		while (atu!=NULL){
+			*p->topo = *atu->prox;
+			free(atu);
+			atu = p->topo;
+		}		
+	}
+	p=NULL;
 }
