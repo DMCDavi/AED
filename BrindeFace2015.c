@@ -1,4 +1,4 @@
-#include "pilhadinamica.h"
+#include "pilhadinamica_brinde.h"
 
 PILHA *pi;
 

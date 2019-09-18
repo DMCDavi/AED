@@ -3,13 +3,11 @@
 #include <string.h>
 
 typedef struct{
-	char nome[15];
-	int valor;
-	char naipe[10];
-}CARTA;
+	char letra[8];
+}BLOCO;
 
 typedef struct no{
-	CARTA dados;
+	BLOCO dados;
 	struct no *prox;
 } NO;
 
@@ -30,7 +28,7 @@ int pilha_vazia(PILHA *p){
 }
 
 // Função que insere no topo da pilha
-int empilha(PILHA *p, CARTA c){ 
+int empilha(PILHA *p, BLOCO c){ 
 	if(p == NULL) return 0;
 	NO *novo_no = (NO*)malloc(sizeof(NO));
 	if(novo_no==NULL) return 0; // Não alocou memória
@@ -44,13 +42,11 @@ int empilha(PILHA *p, CARTA c){
 }
 
 
-int desempilha(PILHA *p, CARTA *c){ 	
+int desempilha(PILHA *p, BLOCO *c){ 	
 	if(pilha_vazia(p)) return 0;
 	NO *aux = p->topo;
 	
-	strcpy(c->nome, aux->dados.nome);
-	strcpy(c->naipe, aux->dados.naipe);
-	c->valor = aux->dados.valor;
+	strcpy(c->letra, aux->dados.letra);
 	
 	// Desloca o topo fazendo-o apontar para o próximo nó
 	p->topo = aux->prox;
@@ -70,7 +66,7 @@ void imprime_pilha(PILHA *p){
 	} 
 	NO *aux = p->topo;
 	while (aux!=NULL){
-		printf("Carta: %s; Valor: %d; Naipe: %s\n", aux->dados.nome, aux->dados.valor, aux->dados.naipe);
+		printf("Letras: %s\n", aux->dados.letra);
 		aux=aux->prox;
 	}
 	printf("==============BASE==============\n");	
