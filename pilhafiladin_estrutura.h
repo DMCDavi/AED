@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-//PILHA
+//ESTRUTURAS
 
 typedef struct{
 	int valor;
@@ -12,6 +12,8 @@ typedef struct no{
 	NUMERO dados;
 	struct no *prox;
 } NO;
+
+//PILHA
 
 typedef struct{
 	NO *topo;
@@ -59,38 +61,11 @@ int desempilha(PILHA *p, NUMERO *c){
 	return 1;
 }
 
-
-void imprime_pilha(PILHA *p){
-	printf("\n==============TOPO==============\n");	
-	if(pilha_vazia(p)){
-		printf("Pilha Vazia!\n");	
-		return;
-	} 
-	NO *aux = p->topo;
-	while (aux!=NULL){
-		printf("Valor: %d\n", aux->dados.valor);
-		aux=aux->prox;
-	}
-	printf("==============BASE==============\n");	
-}
-
-int tamanho_pilha(PILHA *p){
-    int cont=0;
-    if(!pilha_vazia(p)) {
-	    NO *atu = p->topo;
-	    while(atu!=NULL){
-	        cont++;
-	        atu=atu->prox;
-	    }
-	}
-    return cont;
-}
-
 void destroi_pilha(PILHA *p){
 	if(!pilha_vazia(p)){
 		NO *atu = p->topo;
 		while (atu!=NULL){
-			*p->topo = *atu->prox;
+			p->topo = atu->prox;
 			free(atu);
 			atu = p->topo;
 		}		
@@ -155,39 +130,6 @@ int desenfileira(FILA *f, NUMERO *p){
 	return 1;
 }
 
-
-void imprime_fila(FILA *f){
-	if(fila_vazia(f)) printf("FILA VAZIA! ");
-	NO *aux = f->ini;
-	printf("INI <=|");
-	while (aux!=NULL){
-		printf("Valor: %d\n", aux->dados.valor);
-		aux=aux->prox;
-	}
-	printf("<= FIM\n");
-}
-
-/*
-NO *busca_listase(LISTA *l, CARRO c){
-	NO *atu = *l;
-	while((atu!=NULL)&&(strcmp(atu->dados.placa, c.placa)!= 0)){
-		atu=atu->prox;
-	}
-	if (atu==NULL) return NULL;
-	return atu;
-}
-
-int tamanho_listase(LISTA *l){
-    int cont=0;
-    NO *atu = *l;
-    while(atu!=NULL){
-        cont++;
-        atu=atu->prox;
-    }
-    return cont;
-}
-*/
-
 void destroi_fila(FILA *f){
 	NO *atu = f->ini;
 	while (atu!=NULL){
@@ -231,14 +173,25 @@ int enfileira_pri(FILA_PRI *f, NUMERO p){ // Esse *f é um ponteiro que está apon
 		f->ini = novo_no;
 		f->fim = novo_no;
 	}else{
-		NO *aux = f->ini;
+		//inserir no inicio da fila
 		if(p.valor > f->ini->dados.valor){
-			
+			novo_no->prox = f->ini;
+			f->ini = novo_no;
 		}
-		while(aux->prox != NULL){
-			aux = aux->prox;
+		else{
+			NO *aux = f->ini;
+			while(aux->prox != NULL){
+				if(p.valor > aux->prox->dados.valor) break;
+				aux = aux->prox;
+			}
+			//inserir no final da fila
+			if(aux->prox == NULL)aux->prox = novo_no;
+			//inserir no meio da fila	
+			else{
+				novo_no->prox = aux->prox;
+				aux->prox = novo_no;
+			}
 		}
-		aux->prox = novo_no;
 	}
 	return 1;
 }
@@ -258,39 +211,6 @@ int desenfileira_pri(FILA_PRI *f, NUMERO *p){
 	return 1;
 }
 
-
-void imprime_fila_pri(FILA_PRI *f){
-	if(fila_pri_vazia(f)) printf("FILA VAZIA! ");
-	NO *aux = f->ini;
-	printf("INI <=|");
-	while (aux!=NULL){
-		printf("Valor: %d\n", aux->dados.valor);
-		aux=aux->prox;
-	}
-	printf("<= FIM\n");
-}
-
-/*
-NO *busca_listase(LISTA *l, CARRO c){
-	NO *atu = *l;
-	while((atu!=NULL)&&(strcmp(atu->dados.placa, c.placa)!= 0)){
-		atu=atu->prox;
-	}
-	if (atu==NULL) return NULL;
-	return atu;
-}
-
-int tamanho_listase(LISTA *l){
-    int cont=0;
-    NO *atu = *l;
-    while(atu!=NULL){
-        cont++;
-        atu=atu->prox;
-    }
-    return cont;
-}
-*/
-
 void destroi_fila_pri(FILA_PRI *f){
 	NO *atu = f->ini;
 	while (atu!=NULL){
@@ -300,44 +220,3 @@ void destroi_fila_pri(FILA_PRI *f){
 	}
 	f=NULL;
 }
-/*
-int inserirNoFinal(Lista* l, VEICULO v){
-
-if(l==NULL) return 0;
-if(estaCheia(l)) return 0;
-l->dados[l->cont] = v;
-l->cont++;
-return 1;
-
-}
-
-int inserirNoInicio(Lista* l, VEICULO v){
-
-int i;
-if(l==NULL) return 0;
-if(estaCheia(l)) return 0;
-for(i=l->cont-1; i>=0; i--){
-
-l->dados[i+1] = l->dados[i];
-
-}
-l->dados[0] = v;
-l->cont++;
-return 1;
-
-}
-
-int inserirNoMeio(Lista* l, VEICULO v, int
-posicao){
-int i;
-if(l==NULL) return 0;
-if(estaCheia(l)) return 0;
-for(i=l->cont-1; i>=posicao; i--){
-l->dados[i+1] = l->dados[i];
-
-}
-l->dados[posicao] = v;
-l->cont++;
-return 1;
-
-}*/
