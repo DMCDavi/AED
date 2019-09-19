@@ -232,6 +232,9 @@ int enfileira_pri(FILA_PRI *f, NUMERO p){ // Esse *f é um ponteiro que está apon
 		f->fim = novo_no;
 	}else{
 		NO *aux = f->ini;
+		if(p.valor > f->ini->dados.valor){
+			
+		}
 		while(aux->prox != NULL){
 			aux = aux->prox;
 		}
@@ -297,4 +300,44 @@ void destroi_fila_pri(FILA_PRI *f){
 	}
 	f=NULL;
 }
+/*
+int inserirNoFinal(Lista* l, VEICULO v){
 
+if(l==NULL) return 0;
+if(estaCheia(l)) return 0;
+l->dados[l->cont] = v;
+l->cont++;
+return 1;
+
+}
+
+int inserirNoInicio(Lista* l, VEICULO v){
+
+int i;
+if(l==NULL) return 0;
+if(estaCheia(l)) return 0;
+for(i=l->cont-1; i>=0; i--){
+
+l->dados[i+1] = l->dados[i];
+
+}
+l->dados[0] = v;
+l->cont++;
+return 1;
+
+}
+
+int inserirNoMeio(Lista* l, VEICULO v, int
+posicao){
+int i;
+if(l==NULL) return 0;
+if(estaCheia(l)) return 0;
+for(i=l->cont-1; i>=posicao; i--){
+l->dados[i+1] = l->dados[i];
+
+}
+l->dados[posicao] = v;
+l->cont++;
+return 1;
+
+}*/
