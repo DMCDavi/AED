@@ -18,33 +18,25 @@ void bubbleSort(char arr[], int n)
               swap(&arr[j], &arr[j+1]); 
 } 
 
-void changeFile(FILE *file, char name[20])
+void criarArqs(FILE* fita[])
 {
-    file = fopen(name, "w");
-    if (file == NULL)
-    {
-        printf("Error: the file could not be opened\n");
-        printf("Closing the system...\n");
-        exit(1);
-    }
-    else
-    {
-//        char grade[6][4], new_grade[4];
-//        int i, num_grade;
-//        for (i = 0; i < 6; i++)
-//        {
-//            fgets(grade[i], 4, file);
-//            fseek(file, 1, SEEK_CUR);
-//            printf("Grade %d: %s\n", i + 1, grade[i]);
-//        }
-//        printf("\nPlease, write the number of the grade you want to change: ");
-//        scanf("%d", &num_grade);
-//        num_grade == 1 ? rewind(file) : fseek(file, (num_grade - 1) * 4, SEEK_SET);
-//        printf("Please, write the new grade: ");
-//        scanf("%s", new_grade);
-//        fputs(new_grade, file);
-        fclose(file);
-    }
+	int cont;
+    fita[0] = fopen("fita1.txt", "w");
+	fita[1] = fopen("fita2.txt", "w");
+	fita[2] = fopen("fita3.txt", "w");
+	fita[3] = fopen("fita4.txt", "w");
+	fita[4] = fopen("fita5.txt", "w");
+	fita[5] = fopen("fita6.txt", "w");
+	for(cont=0;cont<6;cont++){
+		if (fita[cont] == NULL)
+	    {
+	        printf("Error: the file could not be opened\n");
+	        printf("Closing the system...\n");
+	        exit(1);
+	    }
+	}
+    
+    
 }
 
 int main()
@@ -58,6 +50,7 @@ int main()
 		bloco[cont] = frase[cont];
 	}
 	bubbleSort(bloco, 3);
-	printf("%s", bloco);
+	FILE* pArq[6];
+	criarArqs(pArq);
 	return 0;
 }
