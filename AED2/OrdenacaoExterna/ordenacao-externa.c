@@ -2,55 +2,59 @@
 #include <stdlib.h>
 #include <string.h>
 
-void swap(char *xp, char *yp) 
-{ 
-    char temp = *xp; 
-    *xp = *yp; 
-    *yp = temp; 
-} 
-  
-void bubbleSort(char arr[], int n) 
-{ 
-   int i, j; 
-   for (i = 0; i < n-1; i++)
-       for (j = 0; j < n-i-1; j++)  
-           if (arr[j] > arr[j+1]) 
-              swap(&arr[j], &arr[j+1]); 
-} 
-
-void criarArqs(FILE* fita[])
+void swap(char *xp, char *yp)
 {
-	int cont;
-    fita[0] = fopen("fita1.txt", "w");
-	fita[1] = fopen("fita2.txt", "w");
-	fita[2] = fopen("fita3.txt", "w");
-	fita[3] = fopen("fita4.txt", "w");
-	fita[4] = fopen("fita5.txt", "w");
-	fita[5] = fopen("fita6.txt", "w");
-	for(cont=0;cont<6;cont++){
-		if (fita[cont] == NULL)
-	    {
-	        printf("Error: the file could not be opened\n");
-	        printf("Closing the system...\n");
-	        exit(1);
-	    }
+	char temp = *xp;
+	*xp = *yp;
+	*yp = temp;
+}
+
+void bubbleSort(char arr[], int n)
+{
+	int i, j;
+	for (i = 0; i < n - 1; i++)
+		for (j = 0; j < n - i - 1; j++)
+			if (arr[j] > arr[j + 1])
+				swap(&arr[j], &arr[j + 1]);
+}
+
+void preencheFita(FILE *fita, char *frase, int initial)
+{
+	int contBloco = 0, contFrase = initial;
+	char bloco[4];
+	for (contFrase; contFrase < initial + 3; contFrase++)
+	{
+		bloco[contFrase] = frase[contFrase];
+		contBloco++;
 	}
-    
-    
+	bubbleSort(bloco, 3);
+	fputs(bloco, fita);
+}
+
+void criarArqs(FILE *fita[])
+{
+	int i = 1;
+	char str[20];
+	for (i = 1; i < 7; i++)
+	{
+		sprintf(str, "file%d.txt", i);
+		fita[i - 1] = fopen(str, "w");
+		if (fita[i - 1] == NULL)
+		{
+			printf("Error: the file could not be opened\n");
+			printf("Closing the system...\n");
+			exit(1);
+		}
+	}
 }
 
 int main()
 {
+	FILE *pArq[6];
 	char frase[28];
-	char bloco[4];
-	int cont;
+	criarArqs(pArq);
 	printf("Querido usuario, por favor digite um conjunto de 27 caracteres: \n");
 	scanf("%s", frase);
-	for(cont=0;cont<3;cont++){
-		bloco[cont] = frase[cont];
-	}
-	bubbleSort(bloco, 3);
-	FILE* pArq[6];
-	criarArqs(pArq);
+	preencheFita(pArq[0], frase, 0);
 	return 0;
 }
