@@ -18,17 +18,22 @@ void bubbleSort(char arr[], int n)
 				swap(&arr[j], &arr[j + 1]);
 }
 
-void preencheFita(FILE *fita, char *frase, int initial)
+char *geraBloco(char *str, int numBloco)
 {
-	int contBloco = 0, contFrase = initial;
-	char bloco[4];
-	for (contFrase; contFrase < initial + 3; contFrase++)
+	numBloco *= 3;
+	if (numBloco >= strlen(str))
+		return NULL;
+	int max = numBloco + 3;
+	char *bloco;
+	bloco = (char *)malloc(sizeof(char *) * 4);
+	int i;
+	for (i = 0; numBloco < max && str[numBloco] != '\0'; numBloco++)
 	{
-		bloco[contFrase] = frase[contFrase];
-		contBloco++;
+		bloco[i++] = str[numBloco];
 	}
-	bubbleSort(bloco, 3);
-	fputs(bloco, fita);
+	bloco[i] = '\0';
+	bubbleSort(bloco, strlen(bloco));
+	return bloco;
 }
 
 void criarArqs(FILE *fita[])
@@ -52,9 +57,17 @@ int main()
 {
 	FILE *pArq[6];
 	char frase[28];
+	int i, j;
 	criarArqs(pArq);
 	printf("Querido usuario, por favor digite um conjunto de 27 caracteres: \n");
 	scanf("%s", frase);
-	preencheFita(pArq[0], frase, 0);
+	for (i = 0; i < 2; i++)
+	{
+		for (j = 0; j < 3; j++)
+		{
+			fputs(geraBloco(frase, i == 0 ? j : j + 3), pArq[j]);
+		}
+	}
+
 	return 0;
 }
