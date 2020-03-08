@@ -43,7 +43,7 @@ void criarArqs(FILE *fita[])
 	for (i = 1; i < 7; i++)
 	{
 		sprintf(str, "file%d.txt", i);
-		fita[i - 1] = fopen(str, "w");
+		fita[i - 1] = fopen(str, "w+");
 		if (fita[i - 1] == NULL)
 		{
 			printf("Error: the file could not be opened\n");
@@ -53,6 +53,19 @@ void criarArqs(FILE *fita[])
 	}
 }
 
+/*char ordenarEmFitas(FILE *fita)
+{
+}
+*/
+/*void rewindFitas(FILE *fita)
+{
+	int i = 0;
+	for (i = 0; i < 6; i++)
+	{
+		rewind(fita[i]);
+	}
+}
+*/
 int main()
 {
 	FILE *pArq[6];
@@ -68,6 +81,8 @@ int main()
 			fputs(geraBloco(frase, i == 0 ? j : j + 3), pArq[j]);
 		}
 	}
+	rewind(pArq[0]);
+	printf("%c", pArq[0]);
 
 	return 0;
 }
