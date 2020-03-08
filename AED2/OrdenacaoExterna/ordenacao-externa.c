@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <conio.h>
+
+FILE *fita[7];
 
 void swap(char *xp, char *yp)
 {
@@ -36,20 +39,29 @@ char *geraBloco(char *str, int numBloco)
 	return bloco;
 }
 
-void criarArqs(FILE *fita[])
+void abreArqs(char *modo)
 {
 	int i = 1;
 	char str[20];
-	for (i = 1; i < 7; i++)
+	for (i = 1; i < 8; i++)
 	{
 		sprintf(str, "file%d.txt", i);
-		fita[i - 1] = fopen(str, "w+");
+		fita[i - 1] = fopen(str, modo);
 		if (fita[i - 1] == NULL)
 		{
 			printf("Error: the file could not be opened\n");
 			printf("Closing the system...\n");
 			exit(1);
 		}
+	}
+}
+
+void fechaArqs()
+{
+	int i;
+	for (i = 0; i < 7; i++)
+	{
+		fclose(fita[i]);
 	}
 }
 
@@ -68,21 +80,32 @@ void criarArqs(FILE *fita[])
 */
 int main()
 {
-	FILE *pArq[6];
-	char frase[28];
+
+	char ch, frase[28];
 	int i, j;
-	criarArqs(pArq);
+	abreArqs("w");
 	printf("Querido usuario, por favor digite um conjunto de 27 caracteres: \n");
-	scanf("%s", frase);
+	for (i = 0; i < 27; i++)
+	{
+		if (kbhit)
+		{
+			ch = getch();
+			printf("%c", ch);
+			frase[i] = ch;
+		}
+	}
+	frase[i] = '\0';
+	printf("\n");
+	printf("%s", frase);
 	for (i = 0; i < 2; i++)
 	{
 		for (j = 0; j < 3; j++)
 		{
-			fputs(geraBloco(frase, i == 0 ? j : j + 3), pArq[j]);
+			fputs(geraBloco(frase, i == 0 ? j : j + 3), fita[j]);
 		}
 	}
-	rewind(pArq[0]);
-	printf("%c", pArq[0]);
-
+	//rewind(fita[0]);
+	//printf("%c", fita[0]);
+	fechaArqs();
 	return 0;
 }
