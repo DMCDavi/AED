@@ -65,6 +65,25 @@ void fechaArqs()
 	}
 }
 
+void intercalaFitas()
+{
+	int i, fitaMenorCh = 5;
+	char menorCh = 'z', ch;
+	for (i = 0; i < 3; i++)
+	{
+		fseek(fita[i], 0, SEEK_SET);
+		ch = fgetc(fita[i]);
+		if (ch < menorCh)
+		{
+			menorCh = ch;
+			fitaMenorCh = i;
+		}
+	}
+	fputc(menorCh, fita[3]);
+	rewind(fita[fitaMenorCh]);
+	fputc(' ', fita[fitaMenorCh]);
+}
+
 /*char ordenarEmFitas(FILE *fita)
 {
 }
@@ -81,21 +100,21 @@ void fechaArqs()
 
 int main()
 {
-	char ch, frase[28], aux[3];
+	char chLido, frase[28];
 	int i = 0, j = 0;
-	abreArqs("w");
+	abreArqs("w+");
 	printf("Querido usuario, por favor digite um conjunto de 27 caracteres: \n");
 	while (1)
 	{
 		if (kbhit)
 		{
-			ch = getch();
-			if (ch == 13)
+			chLido = getch();
+			if (chLido == 13)
 				break;
 			if (i <= 27)
 			{
-				printf("%c", ch);
-				frase[i] = ch;
+				printf("%c", chLido);
+				frase[i] = chLido;
 			}
 		}
 		i++;
@@ -109,24 +128,10 @@ int main()
 		fputs(geraBloco(frase, i), fita[j]);
 		j++;
 	}
-
+	intercalaFitas();
 	//rewind(fita[0]);
 	//printf("%c", fita[0]);
 	fechaArqs();
-	abreArqs("r");
-	for (i = 0; i < 3; i++)
-	{
-		fseek(fita[i], 0, SEEK_SET);
-		aux[i] = fgetc(fita[i]);
-		printf("%c\n", aux[i]);
-	}
-
-	fechaArqs();
-	abreArqs("w");
-	for (i = 0; i < 3; i++)
-	{
-		fputc(aux, fita[i]);
-	}
 	return 0;
 }
 
