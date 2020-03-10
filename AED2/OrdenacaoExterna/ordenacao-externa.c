@@ -87,7 +87,9 @@ void ordenaFinal()
 			}
 		}
 		pointer[fitaMenorCh - 3]++;
-		fputc(menorCh, fita[0]);
+		if ((menorCh >= 'a' && menorCh <= 'z') || (menorCh >= 'A' && menorCh <= 'Z'))
+
+			fputc(menorCh, fita[0]);
 	}
 }
 
@@ -114,7 +116,8 @@ void intercalaFitas()
 				}
 			}
 			pointer[fitaMenorCh]++;
-			fputc(menorCh, fita[k]);
+			if ((menorCh >= 'a' && menorCh <= 'z') || (menorCh >= 'A' && menorCh <= 'Z'))
+				fputc(menorCh, fita[k]);
 		}
 		initialPointer = initialPointer + 3;
 		for (l = 0; l < 3; l++)
