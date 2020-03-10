@@ -65,38 +65,64 @@ void fechaArqs()
 	}
 }
 
-void intercalaFitas()
+void ordenaFinal()
 {
-	int i, fitaMenorCh = 5;
+	int j, i, k, l, pointer[3] = {0, 0, 0}, fitaMenorCh = 5;
 	char menorCh = 'z', ch;
-	for (i = 0; i < 3; i++)
+	rewind(fita[0]);
+	for (j = 0; j < 27; j++)
 	{
-		fseek(fita[i], 0, SEEK_SET);
-		ch = fgetc(fita[i]);
-		if (ch < menorCh)
+		menorCh = 'z';
+		for (i = 3; i < 6; i++)
 		{
-			menorCh = ch;
-			fitaMenorCh = i;
+			if (pointer[i - 3] < 9)
+			{
+				fseek(fita[i], pointer[i - 3], SEEK_SET);
+				ch = fgetc(fita[i]);
+				if (ch <= menorCh)
+				{
+					menorCh = ch;
+					fitaMenorCh = i;
+				}
+			}
 		}
+		pointer[fitaMenorCh - 3]++;
+		fputc(menorCh, fita[0]);
 	}
-	fputc(menorCh, fita[3]);
-	rewind(fita[fitaMenorCh]);
-	fputc(' ', fita[fitaMenorCh]);
 }
 
-/*char ordenarEmFitas(FILE *fita)
+void intercalaFitas()
 {
-}
-*/
-/*void rewindFitas(FILE *fita)
-{
-	int i = 0;
-	for (i = 0; i < 6; i++)
+	int j, i, k, l, pointer[3] = {0, 0, 0}, fitaMenorCh = 5, initialPointer = 0;
+	char menorCh = 'z', ch;
+	for (k = 3; k < 6; k++)
 	{
-		rewind(fita[i]);
+		for (j = 0; j < 9; j++)
+		{
+			menorCh = 'z';
+			for (i = 0; i < 3; i++)
+			{
+				if (pointer[i] < initialPointer + 3)
+				{
+					fseek(fita[i], pointer[i], SEEK_SET);
+					ch = fgetc(fita[i]);
+					if (ch <= menorCh)
+					{
+						menorCh = ch;
+						fitaMenorCh = i;
+					}
+				}
+			}
+			pointer[fitaMenorCh]++;
+			fputc(menorCh, fita[k]);
+		}
+		initialPointer = initialPointer + 3;
+		for (l = 0; l < 3; l++)
+		{
+			pointer[l] = initialPointer;
+		}
 	}
 }
-*/
 
 int main()
 {
@@ -129,8 +155,7 @@ int main()
 		j++;
 	}
 	intercalaFitas();
-	//rewind(fita[0]);
-	//printf("%c", fita[0]);
+	ordenaFinal();
 	fechaArqs();
 	return 0;
 }
