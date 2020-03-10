@@ -1,3 +1,10 @@
+/*
+	Davi copiou da internet as funções bubblueSort e swap
+	Davi fez a função fechaArqs
+	Davi e Grhamm fizeram juntos as funções geraBloco, abreArqs e main
+	Davi e João fizeram as funções ordenaFinal e intercalaFitas
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
