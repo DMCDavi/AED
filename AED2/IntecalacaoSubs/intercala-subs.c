@@ -28,22 +28,27 @@ char *geraBloco(char *str, char *lastHeap, int *numHeap)
 		return NULL;
 	char heap[4], bloco[28];
 	int i, j, k = 0, qntdMarcados = 0;
+	//caso essa funcao seja chamada pela primeira vez, o heap vai ser as tres primeiras letras da frase
 	if (*numHeap == 0)
 	{
 		for (i = 0; strlen(str) > *numHeap && i < 3; (*numHeap)++)
 			heap[i++] = str[*numHeap];
 		heap[i] = '\0';
 	}
+	//caso essa funcao nao seja chamada pela primeira vez, o heap vai ser uma string composta pelos caracteres marcados na ultima ordenacao
 	else
 		strcpy(heap, lastHeap);
+	//essa funcao preenche o bloco de forma ordenada
 	for (j = 0; qntdMarcados < 3 && k < 3; j++)
 	{
 		bubbleSort(heap, strlen(heap));
 		bloco[j] = heap[k];
 		if (strlen(str) > *numHeap)
 		{
+			//caso a proxima letra da frase seja maior que a ultima letra do bloco ele troca a primeira letra do heap pela letra da frase
 			if (str[*numHeap] >= bloco[j])
 				heap[0] = str[*numHeap];
+			//caso a proxima letra da frase seja menor que a ultima letra do bloco ele armazena a letra na variavel lastHeap e aumenta o numero de letras marcadas
 			else
 			{
 				lastHeap[qntdMarcados] = str[*numHeap];
