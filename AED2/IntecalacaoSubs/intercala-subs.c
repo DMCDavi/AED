@@ -99,14 +99,14 @@ int main()
 	printf("Querido usuario, por favor digite um conjunto de 27 caracteres: \n");
 	while (1)
 	{
-		//kbhit é uma funcao da biblioteca conio.h que retorna true toda vez que o usuario pressiona uma tecla no teclado
+		//kbhit eh uma funcao da biblioteca conio.h que retorna true toda vez que o usuario pressiona uma tecla no teclado
 		if (kbhit)
 		{
 			chLido = getch();
 			//caso o usuario pressione a tecla ENTER ele sai do loop
 			if (chLido == 13)
 				break;
-			//enquanto a quantidade de caracteres que o usuario digita é menor que 27, o sistema printa na tela a tecla e armazena na variavel frase
+			//enquanto a quantidade de caracteres que o usuario digita eh menor que 27, o sistema printa na tela a tecla e armazena na variavel frase
 			if (posChFrase < 27)
 			{
 				printf("%c", chLido);
