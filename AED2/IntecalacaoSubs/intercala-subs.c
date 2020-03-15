@@ -166,13 +166,13 @@ int main()
 			chLido = getch();
 			if (chLido == 13)
 				break;
-			if (i <= 27)
+			if (i < 27)
 			{
 				printf("%c", chLido);
 				frase[i] = chLido;
+				i++;
 			}
 		}
-		i++;
 	}
 	frase[i] = '\0';
 	printf("\n");
@@ -183,10 +183,8 @@ int main()
 		fputs(bloco, fita[0]);
 		fputc(' ', fita[0]);
 	}
-	// intercalaFitas();
-	// ordenaFinal();
 	fechaArqs();
 	return 0;
 }
 
-// INTERCALACAOBALANCEADA
+// frase de teste: INTERCALACAOBALANCEADA
