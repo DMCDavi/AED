@@ -151,10 +151,10 @@ int main()
 			{
 				printf("%c", chLido);
 				frase[i] = chLido;
+				i++;
 			}
 		}
-		i++;
-	}
+		}
 	frase[i] = '\0';
 	printf("\n");
 	for (i = 0; i < ((strlen(frase) / 3) + (strlen(frase) % 3)); i++)
@@ -170,4 +170,4 @@ int main()
 	return 0;
 }
 
-// ORDENANDOINFODOARQUIVOGRHAM
+// frase de teste: ORDENANDOINFODOARQUIVOGRHAM
