@@ -35,19 +35,19 @@ void quick_sort(int *a, int left, int right)
     }
 }
 
-int buscaBinaria(int *vet[], int alvo, int esquerda, int direita)
+int buscaBinaria(int vet[], int alvo, int esquerda, int direita)
 {
 	int meio = (esquerda + direita) / 2;
 	if( vet[meio] == alvo )
 		return meio;
 	else if( vet[meio] > alvo )
 	{
-		direita = meio;
+		direita = meio - 1;
 		buscaBinaria( vet, alvo, esquerda, direita );
 	}
 	else if( vet[meio] < alvo )
 	{
-		esquerda = meio;
+		esquerda = meio + 1;
 		buscaBinaria( vet, alvo, esquerda, direita );
 	} else
 		return -1;
