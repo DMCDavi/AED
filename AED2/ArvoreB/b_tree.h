@@ -1,12 +1,12 @@
 #include <stdlib.h>
 #include <stdio.h>
-#define M 2
-#define MM (M * 2)
+#define M 1
+#define MM (M * 3)
 
 #define FALSE 0
 #define TRUE 1
 
-typedef long TipoChave;
+typedef int TipoChave;
 
 typedef struct TipoRegistro
 {
@@ -33,7 +33,7 @@ void Pesquisa(TipoRegistro *x, TipoApontador Ap)
 	long i = 1;
 	if (Ap == NULL)
 	{
-		printf("TipoRegistro nao esta presente na arvore\n");
+		printf("Etapa nao esta presente na arvore\n");
 		return;
 	}
 	while (i < Ap->n && x->Chave > Ap->r[i - 1].Chave)
@@ -41,6 +41,10 @@ void Pesquisa(TipoRegistro *x, TipoApontador Ap)
 	if (x->Chave == Ap->r[i - 1].Chave)
 	{
 		*x = Ap->r[i - 1];
+		printf("Etapa encontrada! Dados:\n");
+		printf("Chave: %d\n", x->Chave);
+		printf("Descrição: %s", x->descricao);
+		printf("Preço: %.2f\n", x->custo);
 		return;
 	}
 	if (x->Chave < Ap->r[i - 1].Chave)
@@ -291,7 +295,7 @@ void ImprimeI(TipoApontador p, int nivel)
 	for (i = 0; i < p->n; i++)
 	{
 		printf("Chave: %ld \n", (long)p->r[i].Chave);
-		printf("Descricao: %s \n", p->r[i].descricao);
+		printf("Descricao: %s", p->r[i].descricao);
 		printf("Custo: %.2f \n", (float)p->r[i].custo);
 	}
 	putchar('\n');

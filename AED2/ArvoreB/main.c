@@ -42,42 +42,59 @@ bool remove_tags(char *line, char *tag_name)
 
 int main()
 {
-  ////CODIGO DE SOUSSA PARA TESTAR A BIBLIOTECA DA ARVORE B
-  // TipoRegistro x;
-  // TipoPagina *D;
-  // Inicializa(&D);
-  // printf("Chave: ");
-  // scanf("%ld%*[^\n]", &x.Chave);
-  // printf("Descricao: ");
-  // scanf("%s%*[^\n]", x.descricao);
-  // printf("Custo: ");
-  // scanf("%f%*[^\n]", &x.custo);
-  // Insere(x, &D);
-  // Imprime(D);
-
   setlocale(LC_ALL, "Portuguese");
-  char linha[500], *tag;
-
+  char linha[500], opt;
   FILE *arq_xml;
+  float total_cost = 0;
+  TipoRegistro item;
+  TipoPagina *D;
+
+  printf("Lendo arquivo xml...\n");
+  //Abrindo o arquivo xml
   arq_xml = fopen("project_data.xml", "r");
   if (arq_xml == NULL)
   {
-    printf("Error: the file could not be opened\n");
-    printf("Closing the system...\n");
+    printf("Erro: houve uma falha ao tentar abrir o arquivo\n");
+    printf("Fechando o sistema...\n");
     exit(1);
   }
-
-  //Le todas as linhas do arquivo xml
+  Inicializa(&D);
+  printf("Inserindo valores do arquivo na árvore B...\n");
+  //Le todas as linhas do arquivo xml e escreve seus valores na Ã¡rvore B
   while (fgets(linha, sizeof(linha), arq_xml) != NULL)
   {
     if (remove_tags(linha, "Cod"))
-      printf("%s", &linha);
+    {
+      int cod = atoi(linha);
+      item.Chave = cod;
+    }
     if (remove_tags(linha, "Descr"))
-      printf("%s", &linha);
+    {
+      strcpy(item.descricao, "\0");
+      strcpy(item.descricao, linha);
+    }
     if (remove_tags(linha, "Custo"))
-      printf("%s", &linha);
+    {
+      float cost = atof(linha);
+      item.custo = cost;
+      total_cost += cost;
+      Insere(item, &D);
+    }
   }
-
+  printf("Itens inseridos com sucesso\n");
+  printf("Deseja buscar por alguma etapa? [s/n]\n");
+  scanf("%c", &opt);
+  if (opt == 's')
+  {
+    TipoRegistro item_busca;
+    printf("Digite uma chave para fazer a busca: \n");
+    scanf("%d", &item_busca.Chave);
+    Pesquisa(&item_busca, D);
+  }
+  system("PAUSE");
+  printf("\nBusca terminada! Imprimindo dados da árvore...\n");
+  Imprime(D);
+  printf("\n - PREÇO TOTAL: %.2f - \n", total_cost);
   fclose(arq_xml);
 
   return 0;
